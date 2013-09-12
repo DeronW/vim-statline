@@ -31,31 +31,7 @@ hi default link User4 Special
 
 " ====== basic info ======
 
-" ---- number of buffers : buffer number ----
-
-function! StatlineBufCount()
-    if !exists("s:statline_n_buffers")
-        let s:statline_n_buffers = len(filter(range(1,bufnr('$')), 'buflisted(v:val)'))
-    endif
-    return s:statline_n_buffers
-endfunction
-
-if !exists('g:statline_show_n_buffers')
-    let g:statline_show_n_buffers = 1
-endif
-
-if g:statline_show_n_buffers
-    set statusline=[%{StatlineBufCount()}\:%n]%<
-    " only calculate buffers after adding/removing buffers
-    augroup statline_nbuf
-        autocmd!
-        autocmd BufAdd,BufDelete * unlet! s:statline_n_buffers
-    augroup END
-else
-    set statusline=[%n]%<
-endif
-
-set statusline+=%1*[%f]
+set statusline=%1*[%f]
 
 " (h:help:[help], w:window:[Preview], m:modified:[+][-], r:readonly:[RO])
 set statusline+=%2*%h%w%m%r%*\ %y
@@ -67,7 +43,7 @@ let g:statline_no_encoding_string = 'No Encoding'
 set statusline+=[%{&ff}%{g:statline_encoding_separator}%{strlen(&fenc)?&fenc:g:statline_no_encoding_string}]
 
 set statusline+=%=
-set statusline+=%l:%c\ %P
+set statusline+=%l:%c\ %P\ 
 
 " ====== plugins ======
 
